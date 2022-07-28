@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -13,23 +14,20 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
-
 import java.awt.Color;
 import Puzzle_pkg.Puzzle_Swing;
 import Ranking_pkg.Ranking;
 
-
 public class Login_WindowBuilder {
 
-	
 	private JFrame frame;
 	private JTextField IDtext;
 	private JPasswordField passwordtext;
 	
-	LoginDB Ldb = new LoginDB();
+	LoginDB db = new LoginDB();
 	
 	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
+		EventQueue.invokeLater(new Runnable() { 
 			
 			public void run() {
 				try {
@@ -91,27 +89,28 @@ public class Login_WindowBuilder {
 		JButton Loginbutton = new JButton("로그인");
 		Loginbutton.setBackground(Color.WHITE);
 		Loginbutton.setBounds(71, 243, 111, 47);
-		Loginbutton.addActionListener(new ActionListener() {
+		Loginbutton.addActionListener(new ActionListener() { // 로그인 버튼 클릭 시 동작
 			public void actionPerformed(ActionEvent arg0) {
 				String ID = IDtext.getText();
 				char[] PS1 = passwordtext.getPassword();
 				
 				String PS = String.valueOf(PS1);
-				
 
-				int s = Ldb.LoginTry(new LoginData(ID,PS));
+				int s = db.LoginTry(new LoginData(ID,PS));
+				System.out.println(s);
+				
 				
 				if(s == 1) {
 				
 				JOptionPane.showMessageDialog(null, "로그인 성공");
-				frame.dispose();
+				frame.dispose(); // 로그인 GUI 창 종료
 				
 				Puzzle_Swing window = new Puzzle_Swing();
-				window.setVisible(true);
-				window.setResizable(false);
+				window.setVisible(true); // 슬라이딩 퍼즐 GUI 화면 나타남
+				window.setResizable(false);  // GUI 창 크기 조절 불가능
 				Ranking window2  =  new Ranking();
-				window2.frame.setVisible(true);
-				window2.frame.setResizable(false);
+				window2.frame.setVisible(true); // 랭킹 GUI 화면 나타남
+				window2.frame.setResizable(false);  // GUI 창 크기 조절 불가능
 				} else JOptionPane.showMessageDialog(null, "로그인 실패");
 				
 				
@@ -123,16 +122,18 @@ public class Login_WindowBuilder {
 		JButton button = new JButton("회원 가입");
 		button.setBackground(Color.WHITE);
 		button.setBounds(211, 243, 111, 47);
-		button.addActionListener(new ActionListener() {
+		button.addActionListener(new ActionListener() { // 회원 가입 버튼 클릭 시 동작
 			public void actionPerformed(ActionEvent e) {
 				
 				String ID = IDtext.getText();
 				char[] PS1 = passwordtext.getPassword();
 				String PS = String.valueOf(PS1);
 				
+				System.out.println();
+				System.out.println(passwordtext.getPassword());
 				
 				if(ID.length() != 0 && PS.length() != 0){
-				Ldb.InsertLogin(new LoginData(ID, PS));
+				db.InsertLogin(new LoginData(ID, PS));
 				IDtext.setText(""); passwordtext.setText("");
 				JOptionPane.showMessageDialog(null, "등록 완료");
 				}else JOptionPane.showMessageDialog(null, "ID , PW 입력 바람.");

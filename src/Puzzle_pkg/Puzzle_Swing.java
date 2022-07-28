@@ -20,7 +20,7 @@ public class Puzzle_Swing extends JFrame {
 	private static int oldTime;  //타이머 시작 시각을 기억하고 있는 변수
 
 	public Puzzle_Swing() {
-		stopwatch(1);
+		stopwatch(1); // 시간 측정 시작
 		// 배치
 		setTitle("슬라이딩 퍼즐");
 		setSize(350, 350);
@@ -119,13 +119,14 @@ public class Puzzle_Swing extends JFrame {
 			
 			boolean isEnd = false;
 			int keyCode = e.getKeyCode();
+			
 			switch (keyCode) {
-			case KeyEvent.VK_UP: 
-				if (row == 0) {
+			case KeyEvent.VK_UP: // 방향키 ↑ 클릭 시 동작
+				if (row == 0) { // 바깥 나감 방지
 					break;
 				} else {
 					changebtn = numbtn[row - 1][col]; // 변경할 위 버튼
-					numbtn[row][col].setText(String.valueOf(changebtn.getText())); // 변경할 버튼 입력
+					numbtn[row][col].setText(String.valueOf(changebtn.getText())); // 변경할 버튼 숫자 변경
 					numbtn[row][col].setEnabled(true);
 
 					row = row - 1; // 위에를 다시 가리킴
@@ -134,9 +135,8 @@ public class Puzzle_Swing extends JFrame {
 					numbtn[row][col].setText("");
 					numbtn[row][col].setEnabled(false);
 					
-					isEnd();
-					if (true) {
-						//db.InsertPuzzleDB(new PuzzleData(Ldata.GetID(), timerBuffer));
+					isEnd(); // 게임 종료 확인
+					if (isEnd) { // isEnd를 true로 변경하면 키보드 입력 시 테스트가 바로 가능 함.
 						
 						String getID = JOptionPane.showInputDialog("아이디를 입력 해주세요.");
 						int s = Ldb.LoginOX(new LoginData(getID));
@@ -164,24 +164,23 @@ public class Puzzle_Swing extends JFrame {
 					break;
 				}
 
-			case KeyEvent.VK_DOWN:
-				if (row == 3) {
+			case KeyEvent.VK_DOWN:  // 방향키 ↓ 클릭 시 동작
+				if (row == 3) {  // 바깥 나감 방지
 					break;
 				} else {
-					changebtn = numbtn[row + 1][col];
-					numbtn[row][col].setText(String.valueOf(changebtn.getText()));
+					changebtn = numbtn[row + 1][col];  // 변경할 아래 버튼
+					numbtn[row][col].setText(String.valueOf(changebtn.getText())); // 변경할 버튼 숫자 변경
 					System.out.println("row : " + row + " col : " + col);
 					numbtn[row][col].setEnabled(true);
 
-					row = row + 1;
+					row = row + 1; // 아래를 다시 가리킴
 
-					changebtn = numbtn[row][col];
+					changebtn = numbtn[row][col]; // 빈칸 버튼 지정
 					numbtn[row][col].setText("");
 					numbtn[row][col].setEnabled(false);
 
-					isEnd();
+					isEnd(); // 게임 종료 확인
 					if (isEnd) {
-						//db.InsertPuzzleDB(new PuzzleData(Ldata.GetID(), timerBuffer));
 						
 						String getID = JOptionPane.showInputDialog("아이디를 입력 해주세요.");
 						int s = Ldb.LoginOX(new LoginData(getID));
@@ -209,24 +208,24 @@ public class Puzzle_Swing extends JFrame {
 
 					break;
 				}
-			case KeyEvent.VK_RIGHT:
-				if (col == 3) {
+				
+			case KeyEvent.VK_RIGHT:  // 방향키 → 클릭 시 동작
+				if (col == 3) {  // 바깥 나감 방지
 					break;
 				} else {
-					changebtn = numbtn[row][col + 1];
-					numbtn[row][col].setText(String.valueOf(changebtn.getText()));
+					changebtn = numbtn[row][col + 1]; // 변경할 오른쪽 버튼
+					numbtn[row][col].setText(String.valueOf(changebtn.getText()));  // 변경할 버튼 숫자 변경
 					System.out.println("row : " + row + " col : " + col);
 					numbtn[row][col].setEnabled(true);
 
-					col = col + 1;
+					col = col + 1; // 오른쪽을 다시 가리킴
 
-					changebtn = numbtn[row][col];
+					changebtn = numbtn[row][col]; // 빈칸 버튼 지정
 					numbtn[row][col].setText("");
 					numbtn[row][col].setEnabled(false);
 
-					isEnd();
+					isEnd(); // 게임 종료 확인
 					if (isEnd) {
-						//db.InsertPuzzleDB(new PuzzleData(Ldata.GetID(), timerBuffer));
 						
 						String getID = JOptionPane.showInputDialog("아이디를 입력 해주세요.");
 						int s = Ldb.LoginOX(new LoginData(getID));
@@ -253,24 +252,24 @@ public class Puzzle_Swing extends JFrame {
 					}
 				}
 				break;
-			case KeyEvent.VK_LEFT:
-				if (col == 0) {
+				
+			case KeyEvent.VK_LEFT:  // 방향키 ← 클릭 시 동작
+				if (col == 0) {  // 바깥 나감 방지
 					break;
 				} else {
-					changebtn = numbtn[row][col - 1];
-					numbtn[row][col].setText(String.valueOf(changebtn.getText()));
+					changebtn = numbtn[row][col - 1]; // 변경할 왼쪽 버튼
+					numbtn[row][col].setText(String.valueOf(changebtn.getText())); // 변경할 버튼 숫자 변경
 					System.out.println("row : " + row + " col : " + col);
 					numbtn[row][col].setEnabled(true);
 
-					col = col - 1;
+					col = col - 1; // 왼쪽을 다시 가리킴
 
-					changebtn = numbtn[row][col];
+					changebtn = numbtn[row][col]; // 빈칸 버튼 지정
 					numbtn[row][col].setText("");
 					numbtn[row][col].setEnabled(false);
 
-					isEnd();
+					isEnd(); // 게임 종료 확인
 					if (isEnd) {
-						//db.InsertPuzzleDB(new PuzzleData(Ldata.GetID(), timerBuffer));
 						
 						String getID = JOptionPane.showInputDialog("아이디를 입력 해주세요.");
 						int s = Ldb.LoginOX(new LoginData(getID));
@@ -299,7 +298,7 @@ public class Puzzle_Swing extends JFrame {
 					break;
 				}
 			}
-			stopwatch(0);
+			stopwatch(0); // 시간 측정 종료
 		}
 		
 	}
@@ -310,8 +309,6 @@ public class Puzzle_Swing extends JFrame {
 
 		    if (onOff == 0) // 타이머 off, 시분초 timerBuffer 에 저장
 		      secToHHMMSS(  ((int) System.currentTimeMillis() / 1000) - oldTime  );
-
-
 		  }
 
 		  // 정수로 된 시간을 초단위(sec)로 입력 받고, 문자열로 시분초를 저장
@@ -324,16 +321,5 @@ public class Puzzle_Swing extends JFrame {
 
 		    timerBuffer = String.format("%02d%02d%02d", hour, min, sec);
 		  }
-		  
-		  public JButton[][] getnumbtn(JButton[][] jb){
-			  return numbtn;
-		  }
-		  
-		  public JButton getchangebtn(JButton jb) {
-			  return changebtn;
-		  }
-
-
-	public static void main(String[] args) {
-	}
+		  	  
 }

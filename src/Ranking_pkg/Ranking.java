@@ -2,20 +2,11 @@ package Ranking_pkg;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.util.Vector;
-
-import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
@@ -31,10 +22,10 @@ public class Ranking {
 	public JFrame frame;
 	private JTable table;
 	
-	String colNames[] = {"Rank","ID","Time"};
+	String colNames[] = {"Rank","ID","Time"}; // 테이블 목록 이름 지정
 	private DefaultTableModel model = new DefaultTableModel(colNames, 0);
 
-	public Ranking() {
+	public Ranking() { // 생성자
 		initialize();
 		select();
 		KeyF5();
@@ -42,7 +33,7 @@ public class Ranking {
 	
 	PuzzleDB db = new PuzzleDB();
 	
-	public void select() {
+	public void select() { // 랭킹 정보 출력
 			Vector<PuzzleData> Ar = new Vector<PuzzleData>();
 			Ar = db.PuzzleDBlist();
 		
@@ -53,7 +44,7 @@ public class Ranking {
 			
 	}
 	
-	public void KeyF5(){
+	public void KeyF5(){ // F5 클릭 시 새로고침
 		frame.getContentPane().addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
@@ -70,7 +61,6 @@ public class Ranking {
 		frame.getContentPane().setFocusable(true);
 		frame.getContentPane().requestFocus();
 	}
-	
 	
 	private void initialize() {
 		frame = new JFrame();

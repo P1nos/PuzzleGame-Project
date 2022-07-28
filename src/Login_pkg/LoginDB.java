@@ -10,10 +10,10 @@ public class LoginDB {
 	int count = 0;
 	
 	
-	public LoginDB() {
+	public LoginDB() { // 생성자로 데이터 베이스 연결
 		
 		final String url = "jdbc:mariadb://localhost:3306/puzzledb";
-		final String id = "user";
+		final String id = "root";
 		final String pw = "1234";
 		try{
 		Class.forName("org.mariadb.jdbc.Driver");
@@ -28,7 +28,7 @@ public class LoginDB {
 		}	
 	}
 
-	public void DBClose(){
+	public void DBClose(){ // 커넥션 연결 종료
 		try{
 			if(rs != null) rs.close();
 			if(st != null) st.close();
@@ -36,6 +36,7 @@ public class LoginDB {
 		}catch(Exception e) { System.out.println(e + "=> DBClose 실패");}
 	}
 	
+	// 회원 정보 저장
 	public void InsertLogin(LoginData logindata){
 		String sql = "insert into login values(?, ?, ?)";
 		
@@ -62,7 +63,8 @@ public class LoginDB {
 		}
 	}
 	
-	public void Delete(String ID){
+	// 회원 정보 삭제
+	public void Delete(String ID){ // login table -> Login ID data delete
 		String sql = "Delete from login where ID =?";
 		
 		try{
@@ -78,7 +80,8 @@ public class LoginDB {
 		}
 	}
 	
-	public int LoginTry(LoginData logindata){
+	// ID, Password 확인
+	public int LoginTry(LoginData logindata){ // login table -> Login ID, Password Confirm
 		String sql = "select * from login where ID = ? and Password = ?";
 		
 		try{
@@ -98,7 +101,8 @@ public class LoginDB {
 		return -1;
 	}
 	
-	public int LoginOX(LoginData logindata){
+	// ID 확인
+	public int LoginOX(LoginData logindata){ // login_management table -> Login ID Confirm
 		String sql = "select * from login where ID = ?";
 		try{
 		ps = conn.prepareStatement(sql);

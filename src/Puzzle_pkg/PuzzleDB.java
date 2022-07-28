@@ -9,10 +9,10 @@ public class PuzzleDB{
 	Statement st = null;
 	PreparedStatement ps = null;
 	
-	public PuzzleDB() {
+	public PuzzleDB() { // 생성자로 데이터베이스 연결
 		try {
 			final String url = "jdbc:mariadb://localhost:3306/puzzledb";
-			final String id = "user";
+			final String id = "root";
 			final String pw = "1234";
 			
 			Class.forName("org.mariadb.jdbc.Driver");
@@ -28,7 +28,7 @@ public class PuzzleDB{
 		}
 	}
 	
-	public void DBClose() {
+	public void DBClose() { // 커넥션 연결 종료
 		try {
 			if(rs != null) rs.close();
 			if(st != null) st.close();
@@ -38,7 +38,8 @@ public class PuzzleDB{
 		}
 	}
 	
-	public void InsertPuzzleDB(PuzzleData puzzledata) {
+	//퍼즐 정보 저장
+	public void InsertPuzzleDB(PuzzleData puzzledata) { // puzzle table -> puzzle data insert
 		try {
 			String sql = "insert into puzzle values(?, ?, ?)";
 			ps = conn.prepareStatement(sql);
@@ -53,14 +54,7 @@ public class PuzzleDB{
 		}
 	}
 	
-
-	
-	/*
-	 * String Updata = "update puzzle set ID = ?, Rank = ?,  where Time = ?;"; ps =
-	 * conn.prepareStatement(Updata);
-	 */
-	
-	public Vector<PuzzleData> PuzzleDBlist()
+	public Vector<PuzzleData> PuzzleDBlist()  // puzzle table -> puzzle data list
 	{
 		Vector<PuzzleData> Ar = new Vector<PuzzleData>();
 		 
@@ -81,9 +75,8 @@ public class PuzzleDB{
 		 
 	}
 	
-	
-
-	public void UpdatePuzzleDB(PuzzleData puzzledata)
+	// 퍼즐 정보 업데이트
+	public void UpdatePuzzleDB(PuzzleData puzzledata)  // puzzle table -> puzzle data update
 	{
 		try {
 			String Updata = "update puzzle set Rank = ?, where Time = ?;";
@@ -97,8 +90,9 @@ public class PuzzleDB{
 				DBClose();
 			}
 	}
-
-	public void Delete(String ID)
+	
+	// 퍼즐 정보 삭제
+	public void Delete(String ID)  // puzzle table -> puzzle data delete
 	{
 		String Delete = "delete from puzzle where ID = ?;";
 		try {
